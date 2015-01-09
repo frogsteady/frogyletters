@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+
+    <mapping wildcard="false" map-id="caseA" >
+        <class-a>subMatters.testDozer.SourceChildClass</class-a>
+        <class-b>subMatters.testDozer.DestinationChildClass</class-b>
+    </mapping>
+
+    <mapping  wildcard="true">
+
+        <class-a>subMatters.testDozer.SourceClass</class-a>
+        <class-b>subMatters.testDozer.DestinationClass</class-b>
+        <field>
+            <a>sourceCol</a>
+            <b>destCol</b>
+            <a-hint>subMatters.testDozer.SourceChildClass</a-hint>
+            <b-hint>subMatters.testDozer.DestinationChildClass</b-hint>
+        </field>
+
+        <field> <!--date-->
+            <a date-format="MM/dd/yyyy HH:mm:ss:SS">sourceDate</a>
+            <b>destDate</b>
+        </field>
+
+    </mapping>
+</mappings>

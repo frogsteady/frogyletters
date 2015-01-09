@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="calculationBeanClient" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="http://localhost:8080/someTests_war_exploded/Calculation.http"></property>
+        <property name="serviceInterface" value="communication.testHttpInvoker.Calculation"></property>
+    </bean>
+
+    <!--should declarated in jboss spring-->
+    <bean id="calculationBean" class="communication.testHttpInvoker.CalculationImpl"></bean>
+    <!--should declarated in jboss spring-->
+    <bean name="/Calculation.http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter" lazy-init="false">
+        <property name="service" ref="calculationBean"></property>
+        <property name="serviceInterface" value="communication.testHttpInvoker.Calculation"></property>
+    </bean>
+
+</beans>

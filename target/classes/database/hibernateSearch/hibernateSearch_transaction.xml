@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/hibernatedb" />
+        <property name="username" value="postgres"/>
+        <property name="password" value="admin"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- classpath*:/ -->
+        <!--<property name="configLocations" value="hibernate.cfg.xml"/>-->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="testHibernateSearch.search" />
+        <!--<property name="entityInterceptor" ref="entityInterceptor" />-->
+        <property name="namingStrategy" ref="improvedNamingStrategy"/>
+    </bean>
+
+    <!-- name of column and table -->
+    <bean id="improvedNamingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
+    <!-- aop before save/flush methods -->
+    <bean id="entityInterceptor" class="database.testHibernateSearch.transaction.EntityInterceptor" />
+
+    <bean id="transactionRunner" class="database.testHibernateSearch.transaction.TransactionRunner"/>
+
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(public void testTransaction())"/>
+        <aop:advisor advice-ref="txServiceAdvice" pointcut-ref="transactionPointcut"/>
+    </aop:config>
+
+    <tx:advice id="txServiceAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="test*" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- AOP logger-->
+    <bean id="loggingAspect" class="database.testHibernateSearch.transaction.LoggingAspect"/>
+    <aop:config>
+        <aop:aspect id="logAsp" ref="loggingAspect" >
+            <aop:pointcut id="loggerPointcut" expression="execution(public void testTransaction())"/>
+            <aop:around method="myAroundAdvice" pointcut-ref="loggerPointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

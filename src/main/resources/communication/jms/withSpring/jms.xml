@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- org.jboss.as.naming.InitialContextFactory jnp://localhost:1099-->
+    <bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+        <property name="environment">
+            <props>
+                <prop key="java.naming.factory.initial">
+                    org.jboss.naming.remote.client.InitialContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">
+                    remote://localhost:4447
+                </prop>
+                <prop key="java.naming.factory.url.pkgs">
+                    org.jboss.naming:org.jnp.interfaces
+                </prop>
+                <prop key="java.naming.security.principal">
+                    testuser
+                </prop>
+                <prop key="java.naming.security.credentials">
+                    testpassword
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <property name="connectionFactory" ref="userCredentialConnectionFactory"/>
+    </bean>
+
+    <!-- template for send message -->
+    <bean name="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="userCredentialConnectionFactory"/>
+        <property name="defaultDestination" ref="applicationEventsDestination"/>
+        <property name="receiveTimeout" value="1"/>
+        <property name="sessionTransacted" value="true"/>
+
+    </bean>
+
+    <bean id="userCredentialConnectionFactory" class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
+        <property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+        <property name="username" value="testuser"/>
+        <property name="password" value="testpassword"/>
+    </bean>
+
+    <!-- Extract connection factory via JNDI -->
+    <bean name="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiTemplate" ref="jndiTemplate"/>
+        <property name="jndiName" value="jms/RemoteConnectionFactory"/>
+        <property name="expectedType" value="javax.jms.QueueConnectionFactory"/>
+    </bean>
+
+    <bean name="applicationEventsDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiTemplate" ref="jndiTemplate"/>
+        <property name="jndiName" value="queue/wislaInterHopEvents"/>
+    </bean>
+
+
+
+    <!--receiver -->
+    <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="userCredentialConnectionFactory"/>
+        <property name="destination" ref="applicationEventsDestination"/>
+        <property name="messageListener" ref="jmsEventListener"/>
+        <property name="sessionTransacted" value="true" />
+    </bean>
+
+    <bean id="jmsEventListener" class="communication.testJms.withSpring.JmsSpringConsumer" lazy-init="false" />
+</beans>

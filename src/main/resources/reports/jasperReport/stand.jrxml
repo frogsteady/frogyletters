@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="530" pageHeight="802" whenNoDataType="NoDataSection" columnWidth="530" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+    <property name="ireport.zoom" value="1.771561000000001"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="1089"/>
+    <style name="table">
+        <box>
+            <pen lineWidth="1.0" lineColor="#0066FF"/>
+        </box>
+    </style>
+    <style name="table_TH" mode="Opaque" backcolor="#6495ED">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#0066FF"/>
+            <bottomPen lineWidth="0.5" lineColor="#0066FF"/>
+        </box>
+    </style>
+    <style name="table_CH" mode="Opaque" backcolor="#BFD6FF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#0066FF"/>
+            <bottomPen lineWidth="0.5" lineColor="#0066FF"/>
+        </box>
+    </style>
+    <style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#0066FF"/>
+            <bottomPen lineWidth="0.5" lineColor="#0066FF"/>
+        </box>
+        <conditionalStyle>
+            <conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+            <style backcolor="#EFF4FF"/>
+        </conditionalStyle>
+    </style>
+    <style name="status_color" mode="Opaque">
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$F{eventType}.toString().equals("Отказ")]]></conditionExpression>
+            <style backcolor="#FF6666"/>
+        </conditionalStyle>
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$F{eventType}.toString().equals("Деградация")]]></conditionExpression>
+            <style mode="Opaque" backcolor="#FFFF00"/>
+        </conditionalStyle>
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$F{eventType}.toString().equals("Исключение")]]></conditionExpression>
+            <style mode="Opaque" backcolor="#CCCCCC"/>
+        </conditionalStyle>
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$F{eventType}.toString().equals("Профилактические работы")]]></conditionExpression>
+            <style mode="Opaque" backcolor="#9999FF"/>
+        </conditionalStyle>
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$F{eventType}.toString().equals("Ручное исключение")]]></conditionExpression>
+            <style mode="Opaque" backcolor="#CCCCCC"/>
+        </conditionalStyle>
+    </style>
+    <style name="table 1">
+        <box>
+            <pen lineWidth="1.0" lineColor="#FEFEFE"/>
+        </box>
+    </style>
+    <style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FEFEFE"/>
+            <bottomPen lineWidth="0.5" lineColor="#FEFEFE"/>
+        </box>
+    </style>
+    <style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FEFEFE"/>
+            <bottomPen lineWidth="0.5" lineColor="#FEFEFE"/>
+        </box>
+    </style>
+    <style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <topPen lineWidth="0.5" lineColor="#FEFEFE"/>
+            <bottomPen lineWidth="0.5" lineColor="#FEFEFE"/>
+        </box>
+    </style>
+    <style name="Crosstab Data Text" hAlign="Center"/>
+    <style name="table 2">
+        <box>
+            <pen lineWidth="1.0" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 3">
+        <box>
+            <pen lineWidth="1.0" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 4">
+        <box>
+            <pen lineWidth="1.0" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 5">
+        <box>
+            <pen lineWidth="1.0" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <subDataset name="qualityRules">
+        <field name="qualityRule" class="java.lang.String"/>
+    </subDataset>
+    <subDataset name="failureRules">
+        <field name="failureRule" class="java.lang.String"/>
+    </subDataset>
+    <subDataset name="totalStatusPie">
+        <field name="statusName" class="java.lang.String"/>
+        <field name="statusValue" class="java.lang.Long"/>
+        <field name="statusDuration" class="java.lang.String"/>
+    </subDataset>
+    <subDataset name="bySubIntervalStatusStackedBar">
+        <field name="subInterval" class="java.lang.Integer"/>
+        <field name="statusName" class="java.lang.String"/>
+        <field name="statusValue" class="java.lang.Long"/>
+    </subDataset>
+    <subDataset name="slaDeviations">
+        <field name="startDate" class="java.util.Date"/>
+        <field name="finishDate" class="java.util.Date"/>
+        <field name="duration" class="java.lang.String"/>
+        <field name="eventType" class="java.lang.String"/>
+    </subDataset>
+    <subDataset name="keyEvents">
+        <field name="eventType" class="java.lang.String"/>
+        <field name="duration" class="java.lang.String"/>
+    </subDataset>
+    <subDataset name="qualityIndicators">
+        <field name="metricName" class="java.lang.String"/>
+        <field name="txValue" class="java.lang.String"/>
+        <field name="rxValue" class="java.lang.String"/>
+    </subDataset>
+    <subDataset name="readinessIndicators">
+        <field name="readiness" class="java.lang.String"/>
+    </subDataset>
+    <parameter name="cfsName" class="java.lang.String"/>
+    <parameter name="serviceName" class="java.lang.String"/>
+    <parameter name="cosName" class="java.lang.String"/>
+    <parameter name="categoryAxisLabel" class="java.lang.String"/>
+    <parameter name="valueAxisLabel" class="java.lang.String"/>
+    <parameter name="qualityRules" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="failureRules" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="totalStatus" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="bySubIntervalStatus" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="slaDeviations" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="slaDeviationsInspections" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="keyEvents" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="qualityIndicators" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <parameter name="readinessIndicators" class="net.sf.jasperreports.engine.JRDataSource"/>
+    <group name="slaDeviationsGroup">
+        <groupExpression><![CDATA[$P{slaDeviations}]]></groupExpression>
+    </group>
+    <group name="slaDeviationsInspections">
+        <groupExpression><![CDATA[$P{slaDeviationsInspections}]]></groupExpression>
+    </group>
+    <detail>
+        <band height="667" splitType="Stretch">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="10" y="3" width="507" height="20" forecolor="#4F81BD"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="DejaVu Serif" size="14" isBold="true" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{cfsName}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true">
+                <reportElement x="13" y="25" width="502" height="20" forecolor="#4F81BD"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="DejaVu Serif" size="14" isBold="true" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{serviceName}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="6" y="49" width="125" height="20"/>
+                <textElement textAlignment="Right">
+                    <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Класс обслуживания: ]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="133" y="49" width="162" height="20"/>
+                <textElement>
+                    <font fontName="DejaVu Serif" isBold="true" isItalic="false" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{cosName}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="58" y="74" width="100" height="15"/>
+                <textElement textAlignment="Center">
+                    <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Правила SLA:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="338" y="74" width="132" height="15"/>
+                <textElement textAlignment="Center">
+                    <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Условия готовности:]]></text>
+            </staticText>
+            <componentElement>
+                <reportElement x="6" y="93" width="235" height="12"/>
+                <jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical" ignoreWidth="false">
+                    <datasetRun subDataset="qualityRules">
+                        <dataSourceExpression><![CDATA[$P{qualityRules}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:listContents height="12" width="235">
+                        <textField isStretchWithOverflow="true">
+                            <reportElement x="0" y="0" width="234" height="12"/>
+                            <textElement verticalAlignment="Top" markup="none">
+                                <font fontName="DejaVu Serif" size="7" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                            </textElement>
+                            <textFieldExpression><![CDATA[$F{qualityRule}]]></textFieldExpression>
+                        </textField>
+                    </jr:listContents>
+                </jr:list>
+            </componentElement>
+            <componentElement>
+                <reportElement x="276" y="93" width="246" height="12"/>
+                <jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical" ignoreWidth="false">
+                    <datasetRun subDataset="failureRules">
+                        <dataSourceExpression><![CDATA[$P{failureRules}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:listContents height="23" width="246">
+                        <textField isStretchWithOverflow="true">
+                            <reportElement x="0" y="0" width="246" height="12"/>
+                            <textElement rotation="None">
+                                <font fontName="DejaVu Serif" size="7" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                            </textElement>
+                            <textFieldExpression><![CDATA[$F{failureRule}]]></textFieldExpression>
+                        </textField>
+                    </jr:listContents>
+                </jr:list>
+            </componentElement>
+            <pie3DChart>
+                <chart isShowLegend="true" theme="default">
+                    <reportElement mode="Opaque" x="16" y="202" width="507" height="233" isRemoveLineWhenBlank="true"/>
+                    <chartTitle position="Top" color="#365F91">
+                        <font fontName="DejaVu Serif" size="12" isBold="true"/>
+                        <titleExpression><![CDATA["Общая готовность услуги за отчетный период:"]]></titleExpression>
+                    </chartTitle>
+                    <chartSubtitle/>
+                    <chartLegend backgroundColor="#FFFFFF" position="Bottom"/>
+                </chart>
+                <pieDataset maxCount="5">
+                    <dataset>
+                        <datasetRun subDataset="totalStatusPie">
+                            <dataSourceExpression><![CDATA[$P{totalStatus}]]></dataSourceExpression>
+                        </datasetRun>
+                    </dataset>
+                    <keyExpression><![CDATA[$F{statusName}]]></keyExpression>
+                    <valueExpression><![CDATA[$F{statusValue}]]></valueExpression>
+                    <labelExpression><![CDATA[$F{statusName} + ": \n" + $F{statusValue}.toString() + "% - " + $F{statusDuration}]]></labelExpression>
+                </pieDataset>
+                <pie3DPlot depthFactor="0.2" isCircular="false" labelFormat="{1} - {2}" legendLabelFormat="{0}">
+                    <plot orientation="Horizontal" foregroundAlpha="0.8" labelRotation="10.0">
+                        <seriesColor seriesOrder="0" color="#009900"/>
+                        <seriesColor seriesOrder="1" color="#FF0033"/>
+                        <seriesColor seriesOrder="2" color="#FFFF00"/>
+                        <seriesColor seriesOrder="3" color="#666666"/>
+                        <seriesColor seriesOrder="4" color="#003399"/>
+                    </plot>
+                    <itemLabel>
+                        <font fontName="DejaVu Serif" size="7" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                    </itemLabel>
+                </pie3DPlot>
+            </pie3DChart>
+            <stackedBarChart>
+                <chart isShowLegend="false">
+                    <reportElement x="8" y="468" width="518" height="197"/>
+                    <chartTitle color="#365F91">
+                        <font fontName="DejaVu Serif" size="12" isBold="true"/>
+                        <titleExpression><![CDATA["Детализация качества услуги:"]]></titleExpression>
+                    </chartTitle>
+                    <chartSubtitle/>
+                    <chartLegend position="Right"/>
+                </chart>
+                <categoryDataset>
+                    <dataset>
+                        <datasetRun subDataset="bySubIntervalStatusStackedBar">
+                            <dataSourceExpression><![CDATA[$P{bySubIntervalStatus}]]></dataSourceExpression>
+                        </datasetRun>
+                    </dataset>
+                    <categorySeries>
+                        <seriesExpression><![CDATA[$F{statusName}]]></seriesExpression>
+                        <categoryExpression><![CDATA[$F{subInterval}]]></categoryExpression>
+                        <valueExpression><![CDATA[$F{statusValue}]]></valueExpression>
+                    </categorySeries>
+                </categoryDataset>
+                <barPlot isShowLabels="true">
+                    <plot foregroundAlpha="0.8">
+                        <seriesColor seriesOrder="0" color="#009900"/>
+                        <seriesColor seriesOrder="1" color="#FFFF00"/>
+                        <seriesColor seriesOrder="2" color="#FF0033"/>
+                        <seriesColor seriesOrder="3" color="#666666"/>
+                        <seriesColor seriesOrder="4" color="#003399"/>
+                    </plot>
+                    <itemLabel>
+                        <font fontName="DejaVu Serif" size="8"/>
+                    </itemLabel>
+                    <categoryAxisLabelExpression><![CDATA[$P{categoryAxisLabel}]]></categoryAxisLabelExpression>
+                    <categoryAxisFormat>
+                        <axisFormat>
+                            <labelFont>
+                                <font fontName="DejaVu Serif" size="8"/>
+                            </labelFont>
+                            <tickLabelFont>
+                                <font fontName="DejaVu Serif" size="8"/>
+                            </tickLabelFont>
+                        </axisFormat>
+                    </categoryAxisFormat>
+                    <valueAxisLabelExpression><![CDATA[$P{valueAxisLabel}]]></valueAxisLabelExpression>
+                    <valueAxisFormat>
+                        <axisFormat>
+                            <labelFont>
+                                <font fontName="DejaVu Serif" size="8"/>
+                            </labelFont>
+                        </axisFormat>
+                    </valueAxisFormat>
+                </barPlot>
+            </stackedBarChart>
+            <break>
+                <reportElement x="0" y="666" width="100" height="1"/>
+            </break>
+            <staticText>
+                <reportElement x="114" y="447" width="284" height="14"/>
+                <textElement>
+                    <font fontName="DejaVu Serif" pdfEncoding="Cp1251"/>
+                </textElement>
+                <text><![CDATA[Количественное выражение показателя готовности:]]></text>
+            </staticText>
+            <componentElement>
+                <reportElement key="table 5" x="398" y="443" width="100" height="20"/>
+                <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <datasetRun subDataset="readinessIndicators">
+                        <dataSourceExpression><![CDATA[$P{readinessIndicators}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:column width="90">
+                        <jr:detailCell height="20">
+                            <textField>
+                                <reportElement x="0" y="0" width="90" height="20" forecolor="#000000"/>
+                                <textElement verticalAlignment="Middle">
+                                    <font fontName="DejaVu Serif" isItalic="false" pdfEncoding="Cp1251"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{readiness}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                </jr:table>
+            </componentElement>
+        </band>
+        <band height="72">
+            <componentElement>
+                <reportElement key="table 3" style="table" x="5" y="5" width="510" height="59"/>
+                <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <datasetRun subDataset="qualityIndicators">
+                        <dataSourceExpression><![CDATA[$P{qualityIndicators}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:columnGroup width="299">
+                        <jr:columnGroup width="299">
+                            <jr:columnGroup width="299">
+                                <jr:column width="299">
+                                    <jr:columnHeader style="table_TH" height="36" rowSpan="1">
+                                        <staticText>
+                                            <reportElement style="table_TH" x="13" y="0" width="286" height="36" forecolor="#FFFFFF"/>
+                                            <textElement textAlignment="Left" verticalAlignment="Middle">
+                                                <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                            </textElement>
+                                            <text><![CDATA[Наименование показателя]]></text>
+                                        </staticText>
+                                    </jr:columnHeader>
+                                    <jr:detailCell style="table_TD" height="22" rowSpan="1">
+                                        <textField>
+                                            <reportElement x="13" y="0" width="286" height="22"/>
+                                            <textElement textAlignment="Left" verticalAlignment="Middle">
+                                                <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                            </textElement>
+                                            <textFieldExpression><![CDATA[$F{metricName}]]></textFieldExpression>
+                                        </textField>
+                                    </jr:detailCell>
+                                </jr:column>
+                            </jr:columnGroup>
+                        </jr:columnGroup>
+                    </jr:columnGroup>
+                    <jr:columnGroup width="228">
+                        <jr:column width="113">
+                            <jr:columnHeader style="table_TH" height="36" rowSpan="1">
+                                <staticText>
+                                    <reportElement style="table_TH" x="0" y="0" width="113" height="36" forecolor="#FFFFFF"/>
+                                    <textElement textAlignment="Center" verticalAlignment="Middle">
+                                        <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                    </textElement>
+                                    <text><![CDATA[Прямое]]></text>
+                                </staticText>
+                            </jr:columnHeader>
+                            <jr:detailCell style="table_TD" height="22" rowSpan="1">
+                                <textField>
+                                    <reportElement x="0" y="0" width="113" height="22"/>
+                                    <textElement textAlignment="Center" verticalAlignment="Middle">
+                                        <font fontName="DejaVu Serif" pdfEncoding="Cp1251"/>
+                                    </textElement>
+                                    <textFieldExpression><![CDATA[$F{txValue}]]></textFieldExpression>
+                                </textField>
+                            </jr:detailCell>
+                        </jr:column>
+                        <jr:column width="115">
+                            <jr:columnHeader style="table_TH" height="36" rowSpan="1">
+                                <staticText>
+                                    <reportElement style="table_TH" x="0" y="0" width="115" height="36" forecolor="#FFFFFF"/>
+                                    <textElement textAlignment="Center" verticalAlignment="Middle">
+                                        <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                    </textElement>
+                                    <text><![CDATA[Обратное направление]]></text>
+                                </staticText>
+                            </jr:columnHeader>
+                            <jr:detailCell style="table_TD" height="22" rowSpan="1">
+                                <textField>
+                                    <reportElement x="0" y="0" width="115" height="22"/>
+                                    <textElement textAlignment="Center" verticalAlignment="Middle">
+                                        <font fontName="DejaVu Serif" pdfEncoding="Cp1251"/>
+                                    </textElement>
+                                    <textFieldExpression><![CDATA[$F{rxValue}]]></textFieldExpression>
+                                </textField>
+                            </jr:detailCell>
+                        </jr:column>
+                    </jr:columnGroup>
+                </jr:table>
+            </componentElement>
+        </band>
+        <band height="61">
+            <componentElement>
+                <reportElement key="table" style="table" mode="Opaque" x="6" y="4" width="499" height="50" isRemoveLineWhenBlank="true" backcolor="#FFFFFF"/>
+                <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+                    <datasetRun subDataset="slaDeviations">
+                        <dataSourceExpression><![CDATA[$P{slaDeviations}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:columnGroup width="527">
+                        <jr:column width="134">
+                            <jr:tableHeader style="table_TH" height="30" rowSpan="1">
+                                <staticText>
+                                    <reportElement x="0" y="0" width="134" height="30" forecolor="#FFFFFF"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle">
+                                        <font fontName="DejaVu Serif" isBold="false" pdfEncoding="Cp1251"/>
+                                        <paragraph leftIndent="5"/>
+                                    </textElement>
+                                    <text><![CDATA[Дата начала]]></text>
+                                </staticText>
+                            </jr:tableHeader>
+                            <jr:detailCell style="table_TD" height="21" rowSpan="1">
+                                <textField>
+                                    <reportElement x="0" y="0" width="134" height="19"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle">
+                                        <paragraph leftIndent="10"/>
+                                    </textElement>
+                                    <textFieldExpression><![CDATA[$F{startDate}]]></textFieldExpression>
+                                </textField>
+                            </jr:detailCell>
+                        </jr:column>
+                        <jr:column width="127">
+                            <jr:tableHeader style="table_TH" height="30" rowSpan="1">
+                                <staticText>
+                                    <reportElement mode="Transparent" x="0" y="0" width="127" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+                                        <font fontName="DejaVu Serif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                        <paragraph lineSpacing="Single"/>
+                                    </textElement>
+                                    <text><![CDATA[Дата окончания]]></text>
+                                </staticText>
+                            </jr:tableHeader>
+                            <jr:detailCell style="table_TD" height="21" rowSpan="1">
+                                <textField pattern="" isBlankWhenNull="false">
+                                    <reportElement mode="Transparent" x="0" y="0" width="127" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+                                        <font fontName="DejaVu Serif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                        <paragraph lineSpacing="Single" leftIndent="5"/>
+                                    </textElement>
+                                    <textFieldExpression><![CDATA[$F{finishDate}]]></textFieldExpression>
+                                </textField>
+                            </jr:detailCell>
+                        </jr:column>
+                        <jr:column width="117">
+                            <jr:tableHeader style="table_TH" height="30" rowSpan="1">
+                                <staticText>
+                                    <reportElement mode="Transparent" x="0" y="0" width="117" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+                                        <font fontName="DejaVu Serif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                        <paragraph lineSpacing="Single"/>
+                                    </textElement>
+                                    <text><![CDATA[Длительность]]></text>
+                                </staticText>
+                            </jr:tableHeader>
+                            <jr:detailCell style="table_TD" height="21" rowSpan="1">
+                                <textField pattern="" isBlankWhenNull="false">
+                                    <reportElement mode="Transparent" x="0" y="0" width="117" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+                                        <font fontName="DejaVu Serif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                        <paragraph lineSpacing="Single" leftIndent="5"/>
+                                    </textElement>
+                                    <textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
+                                </textField>
+                            </jr:detailCell>
+                        </jr:column>
+                        <jr:column width="149">
+                            <jr:tableHeader style="table_TH" height="30" rowSpan="1">
+                                <staticText>
+                                    <reportElement mode="Transparent" x="0" y="0" width="149" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+                                        <font fontName="DejaVu Serif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                        <paragraph lineSpacing="Single"/>
+                                    </textElement>
+                                    <text><![CDATA[Тип события]]></text>
+                                </staticText>
+                            </jr:tableHeader>
+                            <jr:detailCell style="table_TD" height="21" rowSpan="1">
+                                <textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+                                    <reportElement style="status_color" mode="Opaque" x="0" y="1" width="149" height="20" forecolor="#000000"/>
+                                    <textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+                                        <font fontName="DejaVu Serif" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1251" isPdfEmbedded="false"/>
+                                        <paragraph lineSpacing="Single" leftIndent="5"/>
+                                    </textElement>
+                                    <textFieldExpression><![CDATA[$F{eventType}]]></textFieldExpression>
+                                </textField>
+                            </jr:detailCell>
+                        </jr:column>
+                    </jr:columnGroup>
+                </jr:table>
+            </componentElement>
+        </band>
+        <band height="56">
+            <componentElement>
+                <reportElement key="table 1" style="table 1" positionType="Float" stretchType="RelativeToTallestObject" x="10" y="3" width="402" height="46"/>
+                <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <datasetRun subDataset="keyEvents">
+                        <dataSourceExpression><![CDATA[$P{keyEvents}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:column width="185">
+                        <jr:tableHeader height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="185" height="30" forecolor="#4F81BD"/>
+                                <textElement verticalAlignment="Middle">
+                                    <font fontName="DejaVu Serif" isBold="true" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                                </textElement>
+                                <text><![CDATA[Итого:]]></text>
+                            </staticText>
+                        </jr:tableHeader>
+                        <jr:columnHeader height="15" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="181" height="15"/>
+                                <textElement verticalAlignment="Middle">
+                                    <font fontName="DejaVu Serif" size="10" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                                </textElement>
+                                <text><![CDATA[Тип события:]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="table 1_TD" height="16" rowSpan="1">
+                            <textField>
+                                <reportElement x="0" y="0" width="181" height="16"/>
+                                <textElement verticalAlignment="Middle">
+                                    <font fontName="DejaVu Serif" size="10" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{eventType}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="181">
+                        <jr:columnHeader height="15" rowSpan="1">
+                            <staticText>
+                                <reportElement x="2" y="0" width="177" height="15"/>
+                                <textElement textAlignment="Right" verticalAlignment="Middle">
+                                    <font fontName="DejaVu Serif" size="10" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                                    <paragraph rightIndent="4"/>
+                                </textElement>
+                                <text><![CDATA[Суммарное время:]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="table 1_TD" height="16" rowSpan="1">
+                            <textField>
+                                <reportElement x="2" y="0" width="177" height="15"/>
+                                <textElement textAlignment="Right" verticalAlignment="Middle">
+                                    <font fontName="DejaVu Serif" size="10" isBold="true" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                                    <paragraph rightIndent="8" tabStopWidth="80"/>
+                                </textElement>
+                                <textFieldExpression><![CDATA[$F{duration}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                </jr:table>
+            </componentElement>
+            <staticText>
+                <reportElement x="6" y="5" width="488" height="20">
+                    <printWhenExpression><![CDATA[$V{slaDeviationsInspections_COUNT}==1 && $P{slaDeviationsInspections}.next()==false]]></printWhenExpression>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Bottom">
+                    <font fontName="DejaVu Serif" pdfEncoding="Cp1251" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Ключевые события не зарегистрированы]]></text>
+            </staticText>
+        </band>
+    </detail>
+</jasperReport>

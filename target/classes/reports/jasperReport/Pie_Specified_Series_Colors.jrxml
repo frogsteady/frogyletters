@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pie_Specified_Series_Colors" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+
+
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="560" splitType="Stretch">
+			<pieChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="0" y="100" width="250" height="200">
+						<property name="PredefinedColors" value="Prod A:red;ProdB asd:orange;Prod C:#C0C0C0;Prod D:cyan;Prod E:magenta"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA["Prod A"]]></keyExpression>
+					<valueExpression><![CDATA[100]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="0" y="300" width="250" height="200">
+						<property name="PredefinedColors" value="Prod A:red;Prod Z:orange;Prod C:#C0C0C0;Prod D:cyan;Prod E:magenta"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+
+					<keyExpression><![CDATA["Prod B"]]></keyExpression>
+					<valueExpression><![CDATA[100]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="40"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Demonstration of a sample Chart Customizer allowing the report designer to specify series colors"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="250" height="60"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["In a standard report it can be difficult to detect trends " +
+"because a series may have a different color depending on " +
+"the order of the resultset or the presence of other items."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="500" width="250" height="60"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["At first glance it appears that Prod C has increased from " +
+"the first chart to the second chart. But on closer inspection " +
+"you can see that it as decreased."]]></textFieldExpression>
+			</textField>
+			<pieChart>
+				<chart isShowLegend="false" evaluationTime="Report" customizerClass="reports.testJasperReport.PieLabels">
+					<reportElement x="305" y="100" width="250" height="200">
+						<property name="PredefinedColors" value="Prod A:red;Prod B:orange;Prod C:#C0C0C0;Prod D:cyan;Prod E:magenta"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA["Prod C"]]></keyExpression>
+					<valueExpression><![CDATA[100]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{0}">
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement x="305" y="40" width="250" height="60"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["These two charts have a chart customizer specified. " +
+"This allows us to specify series colors in the custom " +
+"property called PredefinedColors."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="500" width="250" height="60"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Here it is easy for the end user to see the trend " +
+"from one chart to the next. It's immediately obvious that " +
+"Prod D has increased, Prod C has decreased, and Prod B is gone."]]></textFieldExpression>
+			</textField>
+			<pie3DChart>
+				<chart isShowLegend="false" evaluationTime="Report" customizerClass="reports.testJasperReport.PieLabels">
+					<reportElement x="305" y="300" width="250" height="200">
+						<property name="PredefinedColors" value="Привет:#009900"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+
+					<keyExpression><![CDATA["Привет"]]></keyExpression>
+					<valueExpression><![CDATA[100]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+				</pie3DPlot>
+			</pie3DChart>
+			<rectangle>
+				<reportElement x="274" y="40" width="5" height="520" backcolor="#666666"/>
+			</rectangle>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="34" width="274" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Author: Matt Dahlman"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="34" width="279" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Copyright Jaspersoft Corporation"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!DOCTYPE jasperReport
+        PUBLIC "-//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="JasperDBDemo">
+
+    <style  name="Normal"
+            isDefault="true"
+            pdfFontName="reports/jasperReport/DejaVuSans.ttf"
+            pdfEncoding="Cp1251"
+            />
+
+    <field name="id" class="java.lang.String" />
+    <field name="firstname" class="java.lang.String" />
+    <field name="lastname" class="java.lang.String" />
+    <field name="city" class="java.lang.String" />
+    <field name="segment" class="java.lang.String" />
+
+    <group name="city_group">
+        <groupExpression>
+            <![CDATA[$F{city}]]>
+        </groupExpression>
+        <groupHeader>
+            <band height="40">
+                <textField>
+                    <reportElement x="0" y="10" width="50" height="30"/>
+                    <textFieldExpression>$F{city}</textFieldExpression>
+                </textField>
+            </band>
+        </groupHeader>
+        <groupFooter>
+            <band height="10">
+            </band>
+        </groupFooter>
+    </group>
+
+
+
+    <detail>
+        <band height="20">
+
+            <textField>
+                <reportElement x="0" y="0" width="50" height="20" />
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{id}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="51" y="0" width="200" height="20" />
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{firstname}]]>
+                </textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="252" y="0" width="200" height="20" />
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$F{lastname}]]>
+                </textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<script src="resources/gamePhaser/js/phaser.js"></script>
+<script type="text/javascript">
+
+    function preload()
+    {
+        game.load.image('ball', 'resources/gamePhaser/assets/ball.png');
+        game.load.spritesheet('explode', 'resources/gamePhaser/assets/explode.png', 128, 128);
+        game.load.image('bet', 'resources/gamePhaser/assets/bet.png');
+        game.load.image('player', 'resources/gamePhaser/assets/star.png');
+        game.load.image('grass_main', 'resources/gamePhaser/assets/grass_main.png');
+        game.load.spritesheet('chain', 'resources/gamePhaser/assets/chain.png', 16, 26);
+        game.load.atlasJSONHash('bot', 'resources/gamePhaser/assets/running_bot.png', 'resources/gamePhaser/assets/running_bot.json');
+        game.load.atlasJSONHash('bot2', 'resources/gamePhaser/assets/PlayerSprite.png', 'resources/gamePhaser/assets/PlayerSpritej.json');
+    }
+    var bot;
+    var WIDTH = window.innerWidth;//-100
+    var HEIGHT = window.innerHeight; //-150
+    var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, '', {preload: preload, create: create, update: update, render: render});
+
+    var PLAYER;
+    var LETTERS;
+    var GRASS;
+    var LETTER_QUEUE = [];
+    var TONGUE;
+    var debugLine;
+    var pointerLine;
+    var loseMessage;
+
+    var POINTERS;
+    var pointersMessage;
+
+    function create()
+    {
+        PLAYER = game.add.sprite(200, HEIGHT-128-32, 'bot2');
+        PLAYER.animations.add('ert');
+        PLAYER.animations.play('ert', 15, true); // 15fps, true - loop
+        POINTERS = 0;
+
+        game.stage.backgroundColor = '#2F4F4F';
+        game.world.setBounds(0, 0, WIDTH, HEIGHT);
+        GRASS = game.add.group();
+        for(i=0;i<(WIDTH/128)+1;i++)
+        {
+            GRASS.add(game.add.tileSprite(i*128, HEIGHT-128, 128, 128, 'grass_main'));
+        }
+
+        game.physics.startSystem(Phaser.Physics.P2JS);
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+//        PLAYER = game.add.sprite(100, 350, 'player');
+        PLAYER.anchor.setTo(0.5, 0.5);
+
+        explosions = game.add.group();
+        explosions.createMultiple(30, 'explode');
+        explosions.forEach(function(explode){ explode.anchor.x = 0.5; explode.anchor.y = 0.5; explode.animations.add('explode'); });
+
+        debugLine  = new Phaser.Line(0, 0, 300, 300, {color: ""});
+        pointerLine  = new Phaser.Line(0, 0, 300, 300, {color: "green"});
+        init_letters();
+
+        TONGUE = game.add.sprite(PLAYER.position.x, PLAYER.position.y, 'ball');
+        game.physics.enable(TONGUE, Phaser.Physics.ARCADE);
+
+        loseMessage = game.add.text(100, 100, 'TRY AGAIN', { font: '84px Arial', fill: '#fff' });
+        loseMessage.visible = false;
+
+        pointersMessage = game.add.text(50, 50, POINTERS, { font: '40px Arial', fill: '#fff' });
+    }
+
+//    function accelerateToObject(obj1, obj2, speed) {
+//        if (typeof speed === 'undefined') { speed = 60; }
+//        var angle = Math.atan2(obj2.position.y - obj1.y, obj2.position.x - obj1.x);
+//        obj1.body.rotation = angle ;  // correct angle of angry bullets (depends on the sprite used)
+//        obj1.body.velocity.x = Math.cos(angle) * speed;    // accelerateToObject
+//        obj1.body.velocity.y = Math.sin(angle) * speed;
+//    }
+
+    function init_letters()
+    {
+        LETTERS = game.add.group();
+        for(i=0;i<10;i++)
+        {
+            var letter = game.rnd.integerInRange(65, 90);
+            var letterSprite = game.add.text(500+i*100, game.rnd.integerInRange(0, HEIGHT - 128), String.fromCharCode(letter), { font: '84px Arial', fill: '#fff' });
+            letterSprite.alive=true;
+            game.physics.enable(letterSprite, Phaser.Physics.ARCADE);
+
+            LETTERS.add(letterSprite);
+            LETTER_QUEUE.push(letter);
+        }
+        keyToPress = LETTER_QUEUE.shift();
+        game.input.keyboard.onDownCallback = function(e)
+        {
+            if(e.keycode || e.which == keyToPress)
+            {
+                var itemPressed = LETTERS.getFirstExists();
+                LETTERS.remove(itemPressed);
+                if(!explodeAnimation)
+                {
+                    explodeAnimation = true;
+                    POINTERS += 10;
+                    var itemPressed = game.add.text(itemPressed.position.x, itemPressed.position.y, String.fromCharCode(keyToPress), { font: '84px Arial', fill: '#fff' });
+                    game.add.tween(TONGUE).to( { x: itemPressed.position.x, y:itemPressed.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false)
+                            .onComplete.add(function(){
+                                game.add.tween(TONGUE).to( { x: PLAYER.position.x, y:PLAYER.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
+                                game.add.tween(itemPressed).to( { x: PLAYER.position.x, y:PLAYER.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false).onComplete.add(function(){explodeAnimation = false; itemPressed.destroy();;}, this);
+                            }, this);
+                }
+                else
+                {
+                    POINTERS += 15;
+                    explosions.getFirstExists(false).reset(itemPressed.position.x, itemPressed.position.y).play('explode', 30, false, true);
+                }
+                keyToPress = LETTER_QUEUE.shift();
+            }
+        }
+
+    }
+
+    var explodeAnimation = false;
+
+    function update()
+    {
+        pointerLine.start.set(PLAYER.position.x, PLAYER.position.y);
+        pointerLine.end.set(LETTERS.getFirstExists().position.x, LETTERS.getFirstExists().position.y);
+
+        pointersMessage.text = POINTERS;
+
+        if(LETTERS.getFirstExists().x<PLAYER.x)
+        {
+            loseMessage.visible = true;
+        }
+
+        debugLine.start.set(PLAYER.position.x + 20, PLAYER.position.y);
+        debugLine.end.set(TONGUE.position.x + 20, TONGUE.position.y);
+
+        GRASS.forEach(function(item) {
+            item.tilePosition.x -= 1;
+        });
+        LETTERS.forEach(function(item) {
+            item.position.x -= 1;
+        });
+    }
+
+
+    function render()
+    {
+        game.debug.geom(debugLine, 'rgba(255, 0, 0, 1)');
+        game.debug.geom(pointerLine, 'rgba(255, 255, 0, 0.5)');
+    }
+
+</script>
+<body>
+
+</body>
+</html>
