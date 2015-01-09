@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="resources/gamePhaser/js/phaser.js"></script>
+-<script type="text/javascript">
+
+//    game.physics.startSystem(Phaser.Physics.ARCADE);
+//    game.physics.enable(sprite, Phaser.Physics.ARCADE);
+//    PLAYER.body.velocity.x = 150;
+    //        game.camera.follow(PLAYER);
+    //        cursors = game.input.keyboard.createCursorKeys();
+    //        sprite.body.setZeroVelocity();
+    //        if (cursors.up.isDown)
+    //        {
+    //            sprite.body.moveUp(300)
+    //        }
+    //        else if (cursors.down.isDown)
+    //        {
+    //            sprite.body.moveDown(300);
+    //        }
+    //
+    //        if (cursors.left.isDown)
+    //        {
+    //            sprite.body.velocity.x = -300;
+    //        }
+    //        else if (cursors.right.isDown)
+    //        {
+    //            sprite.body.moveRight(300);
+    //        }
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { create: create, update: update, render: render });
+
+var line;
+var setting = false;
+
+function create() {
+
+    line = new Phaser.Line(64, 64, 200, 300);
+
+    game.input.onDown.add(click, this);
+
+}
+
+function update() {
+
+    if (setting)
+    {
+        if (game.input.activePointer.isDown)
+        {
+            line.end.set(game.input.activePointer.x, game.input.activePointer.y);
+        }
+        else
+        {
+            setting = false;
+        }
+    }
+
+}
+
+function click(pointer) {
+
+    setting = true;
+    line.start.set(pointer.x, pointer.y);
+
+}
+
+function render() {
+
+    game.debug.geom(line);
+    game.debug.rectangle(line);
+
+}
+</script>
+
+
+</body>
+</html>

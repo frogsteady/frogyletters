@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:oi="http://wisla.wellink.com/shared-composite-components">
+<h:head>
+    <!--<h:outputScript target="head" library="js" name="testRaphael.js" > </h:outputScript>-->
+    <!--<h:outputScript target="head" library="js" name="raphael.js" > </h:outputScript>-->
+    <!--<h:outputScript target="head" library="js" name="jquery.js" > </h:outputScript>-->
+    <!--<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+    <h:outputScript target="head" library="js" name="jquery-original.js" > </h:outputScript>
+    <!--<h:outputScript target="head" library="js" name="jquery-terminal.js" > </h:outputScript>-->
+    <h:outputScript target="head" library="js" name="jquery.terminal-emulator.js" > </h:outputScript>
+    <h:outputStylesheet library="css" name="jquery.terminal.css" ></h:outputStylesheet>
+    <script type="text/javascript">
+
+//        $( document ).ready(function()
+//        {
+//            var bigChart = new RaphaelLinearChart("chart");
+//            bigChart.redrawChart();
+//        });
+function alertMessage()
+{
+    alert("hello world");
+}
+
+function addEventListener(elem, eventType, handler)
+{
+    if (elem == null || typeof(elem) == 'undefined') return;
+    if ( elem.addEventListener ) elem.addEventListener(eventType, handler, false);
+    else if ( elem.attachEvent ) elem.attachEvent('on' + eventType, handler);
+    else elem['on' + eventType] = handler;
+
+}
+jQuery(document).ready(function(){
+    addEventListener(jQuery('#button1').get(0), "onclick", alertMessage);
+    $('#term').text("asd");
+    window.terminal = $('body').terminalEmulator();
+//   wQuery("#terminal").terminalEmulator({connect:connect, updateRequest:terminalConnection, sendRequest:keySender, resizeRequest:resize, errorMessage:errorMessage})})
+//        function(command, term) {
+//    if (command == 'foo') {
+//        term.push(function(command) {
+//            if (command.match(/y|yes/i)) {
+//                term.echo('execute your command here');
+//                term.pop();
+//            } else if (command.match(/n|no/i)) {
+//                term.pop();
+//            }
+//        }, {
+//            prompt: 'Are you sure? '
+//        });
+//    }
+//});
+//}
+});
+</script>
+
+</h:head>
+<h:body>
+<h:form prependId="false">
+    <!--//raphael test-->
+    <div id="term"></div>
+    <h:inputText></h:inputText>
+    <h:commandButton value="toIndex2" action="index2" />
+    <h:commandButton value="toIndex4" action="index4" />
+    <h:commandButton id="button1" type="button" value="public api"  />
+    <h:commandButton type="button" value="private api" onclick="window.terminal.privateApi();" />
+    <!--<oi:select names="SUNSHINE" ></oi:select>-->
+</h:form>
+</h:body>
+</html>
