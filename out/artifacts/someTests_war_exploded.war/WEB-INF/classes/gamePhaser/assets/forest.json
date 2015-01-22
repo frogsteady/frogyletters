@@ -1,0 +1,29 @@
+{"frames": [
+
+
+    {
+        "filename": "forest01",
+        "frame": {"x":0,"y":0,"w":435,"h":300},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    },
+    {
+        "filename": "forest02",
+        "frame": {"x":435,"y":0,"w":180,"h":256},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":100,"h":100},
+        "sourceSize": {"w":100,"h":100}
+    }],
+    "meta": {
+        "app": "http://www.texturepacker.com",
+        "version": "1.0",
+        "image": "forest.png",
+        "format": "RGBA8888",
+        "size": {"w":100,"h":100},
+        "scale": "0.2",
+        "smartupdate": "$TexturePacker:SmartUpdate:fb56f261b1eb04e3215824426595f64c$"
+    }
+}

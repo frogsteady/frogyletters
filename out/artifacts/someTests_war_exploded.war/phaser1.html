@@ -15,7 +15,10 @@
         game.load.image('grass_main', 'resources/gamePhaser/assets/grass_main.png');
         game.load.spritesheet('chain', 'resources/gamePhaser/assets/chain.png', 16, 26);
         game.load.atlasJSONHash('bot', 'resources/gamePhaser/assets/running_bot.png', 'resources/gamePhaser/assets/running_bot.json');
-        game.load.atlasJSONHash('bot2', 'resources/gamePhaser/assets/PlayerSprite.png', 'resources/gamePhaser/assets/PlayerSpritej.json');
+        game.load.atlas('PlayerSprite', 'resources/gamePhaser/assets/PlayerSprite.png', 'resources/gamePhaser/assets/PlayerSpritej.json');
+
+        game.load.atlas('forest', 'resources/gamePhaser/assets/forest.png', 'resources/gamePhaser/assets/forest.json');
+
     }
     var bot;
     var WIDTH = window.innerWidth;//-100
@@ -34,9 +37,20 @@
     var POINTERS;
     var pointersMessage;
 
+    var BACKGROUND;
+
+
+    var that;
     function create()
     {
-        PLAYER = game.add.sprite(200, HEIGHT-128-32, 'bot2');
+        BACKGROUND = game.add.group();
+        that = this;
+
+        game.time.events.add(Phaser.Timer.SECOND, draw_background, that);
+//        game.time.events.loop(Phaser.Timer.SECOND*5, draw_background, this);
+
+
+        PLAYER = game.add.sprite(200, HEIGHT-128-32, 'PlayerSprite');
         PLAYER.animations.add('ert');
         PLAYER.animations.play('ert', 15, true); // 15fps, true - loop
         POINTERS = 0;
@@ -51,7 +65,6 @@
 
         game.physics.startSystem(Phaser.Physics.P2JS);
         game.physics.startSystem(Phaser.Physics.ARCADE);
-//        PLAYER = game.add.sprite(100, 350, 'player');
         PLAYER.anchor.setTo(0.5, 0.5);
 
         explosions = game.add.group();
@@ -71,13 +84,25 @@
         pointersMessage = game.add.text(50, 50, POINTERS, { font: '40px Arial', fill: '#fff' });
     }
 
-//    function accelerateToObject(obj1, obj2, speed) {
-//        if (typeof speed === 'undefined') { speed = 60; }
-//        var angle = Math.atan2(obj2.position.y - obj1.y, obj2.position.x - obj1.x);
-//        obj1.body.rotation = angle ;  // correct angle of angry bullets (depends on the sprite used)
-//        obj1.body.velocity.x = Math.cos(angle) * speed;    // accelerateToObject
-//        obj1.body.velocity.y = Math.sin(angle) * speed;
-//    }
+    var xtree = 100;
+    function draw_background()
+    {
+        //Game.width World.width
+//        console.log(GRASS.children[GRASS.children.length-1].x);
+        xtree=currentPosition+game.width;//GRASS.children[GRASS.children.length-1].x;
+        //xtree+=game.rnd.integerInRange(0, game.width);
+//        console.log(xtree);
+//        if(type=='tree')
+//        {
+            BACKGROUND.add(game.add.sprite(xtree, 0, 'forest', 'forest02'));
+        BACKGROUND.add(game.add.sprite(xtree, 256, 'forest', 'forest02'));
+        BACKGROUND.add(game.add.sprite(xtree, 512, 'forest', 'forest02'));
+        BACKGROUND.add(game.add.sprite(xtree, 0, 'forest', 'forest01'));
+
+        game.time.events.add(game.rnd.integerInRange(2500, 5000), draw_background, that);
+//        co
+//        }
+    }
 
     function init_letters()
     {
@@ -107,6 +132,10 @@
                     game.add.tween(TONGUE).to( { x: itemPressed.position.x, y:itemPressed.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false)
                             .onComplete.add(function(){
                                 game.add.tween(TONGUE).to( { x: PLAYER.position.x, y:PLAYER.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
+                                var flyPoint = game.add.text(itemPressed.position.x, itemPressed.position.y, '+10', { font: '44px Arial', fill: '#fff' });
+                                game.add.tween(flyPoint).to( { x: itemPressed.position.x-100, y:itemPressed.position.y }, 800, Phaser.Easing.Linear.None, true, 0, 0, false) .onComplete.add(function(){
+                                    flyPoint.destroy();
+                                }, this);
                                 game.add.tween(itemPressed).to( { x: PLAYER.position.x, y:PLAYER.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false).onComplete.add(function(){explodeAnimation = false; itemPressed.destroy();;}, this);
                             }, this);
                 }
@@ -114,6 +143,10 @@
                 {
                     POINTERS += 15;
                     explosions.getFirstExists(false).reset(itemPressed.position.x, itemPressed.position.y).play('explode', 30, false, true);
+                    var flyPoint = game.add.text(itemPressed.position.x, itemPressed.position.y, '+15', { font: '44px Arial', fill: '#fff' });
+                    game.add.tween(flyPoint).to( { x: itemPressed.position.x-100, y:itemPressed.position.y }, 800, Phaser.Easing.Linear.None, true, 0, 0, false) .onComplete.add(function(){
+                        flyPoint.destroy();
+                    }, this);
                 }
                 keyToPress = LETTER_QUEUE.shift();
             }
@@ -122,12 +155,13 @@
     }
 
     var explodeAnimation = false;
-
+    var currentPosition = 0;
     function update()
     {
         pointerLine.start.set(PLAYER.position.x, PLAYER.position.y);
         pointerLine.end.set(LETTERS.getFirstExists().position.x, LETTERS.getFirstExists().position.y);
 
+        currentPosition += 1;
         pointersMessage.text = POINTERS;
 
         if(LETTERS.getFirstExists().x<PLAYER.x)
@@ -144,6 +178,11 @@
         LETTERS.forEach(function(item) {
             item.position.x -= 1;
         });
+
+        BACKGROUND.position.x -= 1;
+
+
+
     }
 
 
@@ -154,7 +193,7 @@
     }
 
 </script>
-<body>
+<body style="margin: 0px">
 
 </body>
 </html>
