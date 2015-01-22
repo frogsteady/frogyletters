@@ -128,24 +128,14 @@
                 {
                     explodeAnimation = true;
                     POINTERS += 10;
-
-
                     var itemPressed = game.add.text(itemPressed.position.x, itemPressed.position.y, String.fromCharCode(keyToPress), { font: '84px Arial', fill: '#fff' });
                     game.add.tween(TONGUE).to( { x: itemPressed.position.x, y:itemPressed.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false)
                             .onComplete.add(function(){
                                 game.add.tween(TONGUE).to( { x: PLAYER.position.x, y:PLAYER.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false);
-<<<<<<< HEAD
-=======
-
->>>>>>> FETCH_HEAD
                                 var flyPoint = game.add.text(itemPressed.position.x, itemPressed.position.y, '+10', { font: '44px Arial', fill: '#fff' });
                                 game.add.tween(flyPoint).to( { x: itemPressed.position.x-100, y:itemPressed.position.y }, 800, Phaser.Easing.Linear.None, true, 0, 0, false) .onComplete.add(function(){
                                     flyPoint.destroy();
                                 }, this);
-<<<<<<< HEAD
-=======
-
->>>>>>> FETCH_HEAD
                                 game.add.tween(itemPressed).to( { x: PLAYER.position.x, y:PLAYER.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false).onComplete.add(function(){explodeAnimation = false; itemPressed.destroy();;}, this);
                             }, this);
                 }
