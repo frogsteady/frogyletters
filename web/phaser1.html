@@ -6,70 +6,76 @@
 <script src="resources/gamePhaser/js/phaser.js"></script>
 <script type="text/javascript">
 
+    var WIDTH = window.innerWidth;
+    var HEIGHT = window.innerHeight;
+    var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, '', {preload: preload, create: create, update: update, render: render});
+
     function preload()
     {
         game.load.image('ball', 'resources/gamePhaser/assets/ball.png');
         game.load.spritesheet('explode', 'resources/gamePhaser/assets/explode.png', 128, 128);
         game.load.image('bet', 'resources/gamePhaser/assets/bet.png');
+        game.load.spritesheet('far-background', 'resources/gamePhaser/assets/far-background-scale.png',0,0);
         game.load.image('player', 'resources/gamePhaser/assets/star.png');
         game.load.image('grass_main', 'resources/gamePhaser/assets/grass_main.png');
+        game.load.image('grass_un', 'resources/gamePhaser/assets/un.png');
         game.load.spritesheet('chain', 'resources/gamePhaser/assets/chain.png', 16, 26);
         game.load.atlasJSONHash('bot', 'resources/gamePhaser/assets/running_bot.png', 'resources/gamePhaser/assets/running_bot.json');
         game.load.atlas('PlayerSprite', 'resources/gamePhaser/assets/PlayerSprite.png', 'resources/gamePhaser/assets/PlayerSpritej.json');
-
         game.load.atlas('forest', 'resources/gamePhaser/assets/forest.png', 'resources/gamePhaser/assets/forest.json');
+//        game.load.atlas('ground', 'resources/gamePhaser/assets/ground.png', 'resources/gamePhaser/assets/ground.json');
 
     }
-    var bot;
-    var WIDTH = window.innerWidth;//-100
-    var HEIGHT = window.innerHeight; //-150
-    var game = new Phaser.Game(WIDTH, HEIGHT, Phaser.CANVAS, '', {preload: preload, create: create, update: update, render: render});
+
 
     var PLAYER;
-    var LETTERS;
+    var PLAYER_POINTERS;
     var GRASS;
+    var LETTERS;
     var LETTER_QUEUE = [];
     var TONGUE;
-    var debugLine;
-    var pointerLine;
-    var loseMessage;
-
-    var POINTERS;
-    var pointersMessage;
-
+    var EXPLOSIONS;
     var BACKGROUND;
+
+    var pointersMessage;
+    var loseMessage;
+    var pointerLine;
+    var debugLine;
 
 
     var that;
     function create()
     {
-        BACKGROUND = game.add.group();
         that = this;
 
-        game.time.events.add(Phaser.Timer.SECOND, draw_background, that);
-//        game.time.events.loop(Phaser.Timer.SECOND*5, draw_background, this);
+        bg = game.add.tileSprite(0, 0, WIDTH, HEIGHT, 'far-background');
+        console.log(1728/2-HEIGHT/2);
+        bg.tilePosition.y = -(1728/2-HEIGHT/2);
+        game.physics.startSystem(Phaser.Physics.P2JS);
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        game.world.setBounds(0, 0, WIDTH, HEIGHT);
+//        game.stage.backgroundColor = '#2F4F4F';
 
+        BACKGROUND = game.add.group();
+        game.time.events.add(Phaser.Timer.SECOND, draw_background, that);
+        GRASS = game.add.group();
+        for(var i=0;i<(WIDTH/128)+1;i++)
+        {
+
+//            GRASS.add(game.add.tileSprite(i*257, HEIGHT-150+30, 257, 150,'ground', 'ground01'));
+            GRASS.add(game.add.tileSprite(i*128, HEIGHT-128, 128, 128, 'grass_main'));
+//            GRASS.add(game.add.tileSprite(i*2000, HEIGHT-100, 2000, 100, 'grass_un'));
+        }
 
         PLAYER = game.add.sprite(200, HEIGHT-128-32, 'PlayerSprite');
         PLAYER.animations.add('ert');
         PLAYER.animations.play('ert', 15, true); // 15fps, true - loop
-        POINTERS = 0;
-
-        game.stage.backgroundColor = '#2F4F4F';
-        game.world.setBounds(0, 0, WIDTH, HEIGHT);
-        GRASS = game.add.group();
-        for(i=0;i<(WIDTH/128)+1;i++)
-        {
-            GRASS.add(game.add.tileSprite(i*128, HEIGHT-128, 128, 128, 'grass_main'));
-        }
-
-        game.physics.startSystem(Phaser.Physics.P2JS);
-        game.physics.startSystem(Phaser.Physics.ARCADE);
         PLAYER.anchor.setTo(0.5, 0.5);
+        PLAYER_POINTERS = 0;
 
-        explosions = game.add.group();
-        explosions.createMultiple(30, 'explode');
-        explosions.forEach(function(explode){ explode.anchor.x = 0.5; explode.anchor.y = 0.5; explode.animations.add('explode'); });
+        EXPLOSIONS = game.add.group();
+        EXPLOSIONS.createMultiple(30, 'explode');
+        EXPLOSIONS.forEach(function(explode){ explode.anchor.x = 0.5; explode.anchor.y = 0.5; explode.animations.add('explode'); });
 
         debugLine  = new Phaser.Line(0, 0, 300, 300, {color: ""});
         pointerLine  = new Phaser.Line(0, 0, 300, 300, {color: "green"});
@@ -81,7 +87,7 @@
         loseMessage = game.add.text(100, 100, 'TRY AGAIN', { font: '84px Arial', fill: '#fff' });
         loseMessage.visible = false;
 
-        pointersMessage = game.add.text(50, 50, POINTERS, { font: '40px Arial', fill: '#fff' });
+        pointersMessage = game.add.text(50, 50, PLAYER_POINTERS, { font: '40px Arial', fill: '#fff' });
     }
 
     var xtree = 100;
@@ -94,9 +100,9 @@
 //        console.log(xtree);
 //        if(type=='tree')
 //        {
-            BACKGROUND.add(game.add.sprite(xtree, 0, 'forest', 'forest02'));
-        BACKGROUND.add(game.add.sprite(xtree, 256, 'forest', 'forest02'));
-        BACKGROUND.add(game.add.sprite(xtree, 512, 'forest', 'forest02'));
+
+        for(var i=0;i<Math.ceil(HEIGHT/256);i++)
+            BACKGROUND.add(game.add.sprite(xtree, i*256, 'forest', 'forest02'));
         BACKGROUND.add(game.add.sprite(xtree, 0, 'forest', 'forest01'));
 
         game.time.events.add(game.rnd.integerInRange(2500, 5000), draw_background, that);
@@ -107,7 +113,7 @@
     function init_letters()
     {
         LETTERS = game.add.group();
-        for(i=0;i<10;i++)
+        for(i=0;i<100;i++)
         {
             var letter = game.rnd.integerInRange(65, 90);
             var letterSprite = game.add.text(500+i*100, game.rnd.integerInRange(0, HEIGHT - 128), String.fromCharCode(letter), { font: '84px Arial', fill: '#fff' });
@@ -127,7 +133,7 @@
                 if(!explodeAnimation)
                 {
                     explodeAnimation = true;
-                    POINTERS += 10;
+                    PLAYER_POINTERS += 10;
                     var itemPressed = game.add.text(itemPressed.position.x, itemPressed.position.y, String.fromCharCode(keyToPress), { font: '84px Arial', fill: '#fff' });
                     game.add.tween(TONGUE).to( { x: itemPressed.position.x, y:itemPressed.position.y }, 200, Phaser.Easing.Linear.None, true, 0, 0, false)
                             .onComplete.add(function(){
@@ -141,8 +147,8 @@
                 }
                 else
                 {
-                    POINTERS += 15;
-                    explosions.getFirstExists(false).reset(itemPressed.position.x, itemPressed.position.y).play('explode', 30, false, true);
+                    PLAYER_POINTERS += 15;
+                    EXPLOSIONS.getFirstExists(false).reset(itemPressed.position.x, itemPressed.position.y).play('explode', 30, false, true);
                     var flyPoint = game.add.text(itemPressed.position.x, itemPressed.position.y, '+15', { font: '44px Arial', fill: '#fff' });
                     game.add.tween(flyPoint).to( { x: itemPressed.position.x-100, y:itemPressed.position.y }, 800, Phaser.Easing.Linear.None, true, 0, 0, false) .onComplete.add(function(){
                         flyPoint.destroy();
@@ -162,7 +168,7 @@
         pointerLine.end.set(LETTERS.getFirstExists().position.x, LETTERS.getFirstExists().position.y);
 
         currentPosition += 1;
-        pointersMessage.text = POINTERS;
+        pointersMessage.text = PLAYER_POINTERS;
 
         if(LETTERS.getFirstExists().x<PLAYER.x)
         {
@@ -180,6 +186,7 @@
         });
 
         BACKGROUND.position.x -= 1;
+        bg.tilePosition.x -= 1;
 
 
 

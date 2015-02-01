@@ -1,0 +1,21 @@
+{"frames": [
+
+
+    {
+        "filename": "ground01",
+        "frame": {"x":0,"y":800,"w":257,"h":150},
+        "rotated": false,
+        "trimmed": true,
+        "spriteSourceSize": {"x":0,"y":0,"w":257,"h":150},
+        "sourceSize": {"w":257,"h":150}
+    }],
+    "meta": {
+        "app": "http://www.texturepacker.com",
+        "version": "1.0",
+        "image": "ground.png",
+        "format": "RGBA8888",
+        "size": {"w":257,"h":150    },
+        "scale": "0.2",
+        "smartupdate": "$TexturePacker:SmartUpdate:fb56f261b1eb04e3215824426595f64c$"
+    }
+}
