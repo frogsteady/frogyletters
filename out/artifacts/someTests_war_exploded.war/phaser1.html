@@ -59,12 +59,12 @@
         BACKGROUND = game.add.group();
         game.time.events.add(Phaser.Timer.SECOND, draw_background, that);
         GRASS = game.add.group();
-        for(var i=0;i<(WIDTH/128)+1;i++)
+        for(var i=0;i<(WIDTH/2064)+1;i++)
         {
 
 //            GRASS.add(game.add.tileSprite(i*257, HEIGHT-150+30, 257, 150,'ground', 'ground01'));
-            GRASS.add(game.add.tileSprite(i*128, HEIGHT-128, 128, 128, 'grass_main'));
-//            GRASS.add(game.add.tileSprite(i*2000, HEIGHT-100, 2000, 100, 'grass_un'));
+//            GRASS.add(game.add.tileSprite(i*128, HEIGHT-128, 128, 128, 'grass_main'));
+            GRASS.add(game.add.tileSprite(i*2064, HEIGHT-100, 2000, 100, 'grass_un'));
         }
 
         PLAYER = game.add.sprite(200, HEIGHT-128-32, 'PlayerSprite');
